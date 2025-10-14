@@ -1,0 +1,155 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* ComputeClub - Sunset Fire Theme 🔥 */
+    --background: 30 20% 98%;
+    --foreground: 220 15% 20%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 20%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 20%;
+
+    /* Vibrant red-orange primary */
+    --primary: 15 85% 55%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 20 90% 60%;
+
+    /* Warm coral secondary */
+    --secondary: 10 70% 65%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* Muted peachy tones */
+    --muted: 25 30% 92%;
+    --muted-foreground: 220 10% 45%;
+
+    /* Golden yellow accent */
+    --accent: 40 85% 60%;
+    --accent-foreground: 220 15% 20%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 25 20% 88%;
+    --input: 25 20% 88%;
+    --ring: 15 85% 55%;
+
+    --radius: 0.75rem;
+    
+    /* Gradients */
+    --gradient-sunset: linear-gradient(135deg, hsl(15 85% 55%), hsl(25 90% 60%), hsl(40 85% 60%));
+    --gradient-glow: linear-gradient(180deg, hsl(15 85% 55% / 0.1), transparent);
+    
+    /* Shadows with warm glow */
+    --shadow-glow: 0 10px 40px -10px hsl(15 85% 55% / 0.3);
+    --shadow-card: 0 2px 8px hsl(220 15% 20% / 0.08);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 220 20% 12%;
+    --foreground: 30 15% 95%;
+
+    --card: 220 18% 15%;
+    --card-foreground: 30 15% 95%;
+
+    --popover: 220 18% 15%;
+    --popover-foreground: 30 15% 95%;
+
+    --primary: 15 85% 55%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 20 90% 60%;
+
+    --secondary: 10 70% 65%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 220 15% 20%;
+    --muted-foreground: 30 10% 65%;
+
+    --accent: 40 85% 60%;
+    --accent-foreground: 220 18% 15%;
+
+    --destructive: 0 75% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 15% 25%;
+    --input: 220 15% 25%;
+    --ring: 15 85% 55%;
+    
+    --sidebar-background: 220 20% 10%;
+    --sidebar-foreground: 30 15% 90%;
+    --sidebar-primary: 15 85% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 15% 18%;
+    --sidebar-accent-foreground: 30 15% 95%;
+    --sidebar-border: 220 15% 20%;
+    --sidebar-ring: 15 85% 55%;
+    
+    --gradient-sunset: linear-gradient(135deg, hsl(15 85% 55%), hsl(25 90% 60%), hsl(40 85% 60%));
+    --gradient-glow: linear-gradient(180deg, hsl(15 85% 55% / 0.15), transparent);
+    --shadow-glow: 0 10px 40px -10px hsl(15 85% 55% / 0.4);
+    --shadow-card: 0 2px 8px hsl(0 0% 0% / 0.3);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+}
+
+@layer utilities {
+  .gradient-sunset {
+    background: var(--gradient-sunset);
+  }
+  
+  .gradient-glow {
+    background: var(--gradient-glow);
+  }
+  
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+  
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+  
+  .glass-card {
+    @apply bg-white/70 dark:bg-card/70 backdrop-blur-xl border border-border;
+  }
+}
