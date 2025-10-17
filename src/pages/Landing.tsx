@@ -13,6 +13,7 @@ export default function Landing() {
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-32 pb-20">
         <div className="absolute inset-0 gradient-sunset opacity-10" />
+        
         {/* Animated background orbs */}
         <motion.div
           className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl"
@@ -30,6 +31,58 @@ export default function Landing() {
           }}
           transition={{ duration: 10, repeat: Infinity }}
         />
+
+        {/* Polaroid-style images */}
+        <motion.div
+          className="absolute top-20 left-20 rotate-[-12deg] hidden lg:block"
+          animate={{ y: [0, -10, 0], rotate: [-12, -10, -12] }}
+          transition={{ duration: 4, repeat: Infinity }}
+        >
+          <div className="bg-white p-3 shadow-2xl rounded-sm w-40">
+            <div className="h-32 bg-gradient-to-br from-primary/20 to-accent/20 mb-2 rounded-sm flex items-center justify-center text-5xl">
+              💻
+            </div>
+            <p className="text-xs font-handwriting text-center text-gray-700">coding time!</p>
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="absolute top-32 right-24 rotate-[8deg] hidden lg:block"
+          animate={{ y: [0, 10, 0], rotate: [8, 10, 8] }}
+          transition={{ duration: 5, repeat: Infinity }}
+        >
+          <div className="bg-white p-3 shadow-2xl rounded-sm w-40">
+            <div className="h-32 bg-gradient-to-br from-secondary/20 to-primary/20 mb-2 rounded-sm flex items-center justify-center text-5xl">
+              🚀
+            </div>
+            <p className="text-xs font-handwriting text-center text-gray-700">launch day!</p>
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="absolute bottom-32 left-32 rotate-[15deg] hidden lg:block"
+          animate={{ y: [0, -15, 0], rotate: [15, 12, 15] }}
+          transition={{ duration: 6, repeat: Infinity }}
+        >
+          <div className="bg-white p-3 shadow-2xl rounded-sm w-40">
+            <div className="h-32 bg-gradient-to-br from-accent/20 to-secondary/20 mb-2 rounded-sm flex items-center justify-center text-5xl">
+              🎉
+            </div>
+            <p className="text-xs font-handwriting text-center text-gray-700">hackathon win!</p>
+          </div>
+        </motion.div>
+
+        {/* Doodle illustrations */}
+        <motion.div
+          className="absolute bottom-20 right-32 opacity-10 hidden lg:block"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+        >
+          <svg width="100" height="100" viewBox="0 0 100 100" className="text-primary">
+            <circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="5,5" />
+            <circle cx="50" cy="50" r="15" fill="currentColor" opacity="0.3" />
+          </svg>
+        </motion.div>
         
         <div className="container relative px-4">
           <motion.div
@@ -45,7 +98,7 @@ export default function Landing() {
               className="inline-flex items-center space-x-2 bg-primary/10 text-primary px-5 py-2.5 rounded-full text-sm font-bold border-2 border-primary/30 shadow-glow"
             >
               <Flame className="h-5 w-5 animate-pulse" />
-              <span>The Ultimate Club Management Platform</span>
+              <span>1000+ Compute Clubs worldwide!</span>
               <Sparkles className="h-4 w-4" />
             </motion.div>
 
@@ -54,12 +107,13 @@ export default function Landing() {
                 Compute Club
               </span>
               <span className="block text-4xl md:text-6xl text-foreground mt-4">
-                Where Code Meets Community
+                Dashboard
               </span>
             </h1>
 
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Build, manage, and scale your coding club with <span className="text-primary font-bold">XP systems</span>, <span className="text-accent font-bold">event tracking</span>, and a <span className="text-secondary font-bold">vibrant community</span> — all in one place.
+              The place where Compute Club leaders manage their clubs, log projects,
+              <br />buy hardware, find lessons and make the best clubs possible!
             </p>
 
             <motion.div
@@ -68,37 +122,23 @@ export default function Landing() {
               transition={{ delay: 0.4 }}
               className="flex flex-col sm:flex-row gap-4 justify-center items-center"
             >
+              <Button size="lg" className="bg-white/10 backdrop-blur text-foreground border-2 border-foreground/20 hover:bg-white/20 hover:scale-105 transition-all font-bold px-8 py-6 text-lg" asChild>
+                <Link to="/clubs">
+                  <Flame className="mr-2 h-6 w-6" />
+                  Link my club
+                </Link>
+              </Button>
               <Button size="lg" className="gradient-sunset text-white shadow-glow hover:scale-105 transition-all font-bold px-8 py-6 text-lg animate-glow-pulse" asChild>
                 <Link to="/signup">
                   <Rocket className="mr-2 h-6 w-6" />
-                  Start Your Club
+                  Start a club
                 </Link>
               </Button>
               <Button size="lg" variant="outline" className="border-2 font-bold px-8 py-6 text-lg" asChild>
                 <Link to="/login">
-                  <Zap className="mr-2 h-5 w-5" />
-                  Login
+                  Sign In
                 </Link>
               </Button>
-            </motion.div>
-
-            {/* Stats Bar */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="grid grid-cols-3 gap-6 max-w-2xl mx-auto pt-12"
-            >
-              {[
-                { value: "500+", label: "Active Clubs" },
-                { value: "10K+", label: "Members" },
-                { value: "50K+", label: "XP Earned" },
-              ].map((stat, i) => (
-                <div key={i} className="text-center">
-                  <div className="text-3xl md:text-4xl font-black text-primary">{stat.value}</div>
-                  <div className="text-sm text-muted-foreground font-medium mt-1">{stat.label}</div>
-                </div>
-              ))}
             </motion.div>
           </motion.div>
         </div>
@@ -113,32 +153,37 @@ export default function Landing() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
+          <div className="inline-flex items-center space-x-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-bold mb-4">
+            <Sparkles className="h-4 w-4" />
+            <span>Everything You Need</span>
+          </div>
           <h2 className="text-4xl md:text-5xl font-black mb-4">
-            <span className="gradient-sunset bg-clip-text text-transparent">Everything You Need</span>
+            Built for Modern Compute Clubs
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Manage your club like a pro with powerful tools designed for modern student communities
+            Built by Compute Clubbers, for Compute Clubbers. Everything you need to run an
+            <br />awesome club is right here—no more juggling spreadsheets and sticky notes!
           </p>
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-8">
           {[
             {
-              icon: Trophy,
-              title: "XP & Gamification",
-              description: "Reward members for contributions with XP, unlock achievements, and climb the leaderboard together.",
+              icon: Users,
+              title: "Keep Track of Your Members",
+              description: "See who's in your club, what they're working on, and how they're doing. No more losing track of people or wondering who's actually showing up to meetings.",
               color: "from-primary to-secondary"
             },
             {
-              icon: Users,
-              title: "Team Collaboration",
-              description: "Built-in chat, task management, and event planning. Keep everyone aligned and engaged.",
+              icon: Trophy,
+              title: "Plan Your Hackathons & Meetings",
+              description: "Schedule workshops, hackathons, and club meetings without the headache. Send reminders so people actually show up, and keep track of who came. It's way easier than group chats and sticky notes.",
               color: "from-secondary to-accent"
             },
             {
-              icon: Sparkles,
-              title: "Club Promotion",
-              description: "Create stunning promotional materials with customizable templates and QR codes.",
+              icon: Code2,
+              title: "See What Everyone's Building",
+              description: "Keep tabs on all the cool stuff your members are working on. Give them feedback, cheer them on when they hit milestones, and watch your club's projects come to life.",
               color: "from-accent to-primary"
             },
           ].map((feature, i) => {
@@ -163,6 +208,39 @@ export default function Landing() {
               </motion.div>
             );
           })}
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="relative overflow-hidden py-20 bg-gradient-to-br from-card to-muted/30">
+        <div className="container px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto"
+          >
+            {[
+              { value: "1,000+", label: "ACTIVE CLUBS", icon: "🏫" },
+              { value: "50,000+", label: "STUDENT HACKERS", icon: "👨‍💻" },
+              { value: "100,000+", label: "PROJECTS BUILT", icon: "🚀" },
+            ].map((stat, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: i * 0.1 }}
+                viewport={{ once: true }}
+                className="text-center"
+              >
+                <Card className="p-8 glass-card shadow-glow border-2 border-primary/20">
+                  <div className="text-5xl mb-4">{stat.icon}</div>
+                  <div className="text-4xl md:text-5xl font-black text-primary mb-2">{stat.value}</div>
+                  <div className="text-sm font-bold text-muted-foreground tracking-wider">{stat.label}</div>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
@@ -209,9 +287,9 @@ export default function Landing() {
             <div>
               <h4 className="font-bold mb-3">Product</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link to="/about" className="hover:text-primary transition-colors">About</Link></li>
                 <li><Link to="/clubs" className="hover:text-primary transition-colors">Our Clubs</Link></li>
-                <li><Link to="/features" className="hover:text-primary transition-colors">Features</Link></li>
+                <li><Link to="/philosophy" className="hover:text-primary transition-colors">Philosophy</Link></li>
+                <li><Link to="/contact" className="hover:text-primary transition-colors">Contact</Link></li>
               </ul>
             </div>
             

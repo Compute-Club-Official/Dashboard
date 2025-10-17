@@ -1,22 +1,25 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Settings as SettingsIcon, User, LogOut, AlertTriangle } from "lucide-react";
+import { Settings as SettingsIcon, User, LogOut, AlertTriangle, ArrowLeft, Calendar } from "lucide-react";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 export default function Settings() {
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     name: "Alex Chen",
     username: "alexchen",
     avatar: "",
     discordId: "alex#1234",
+    dateOfBirth: "1998-05-15",
+    bio: "Passionate developer and tech enthusiast",
   });
-  const navigate = useNavigate();
 
   const handleSave = () => {
     toast.success("Settings saved successfully!");
@@ -28,22 +31,24 @@ export default function Settings() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-6 animate-fade-in">
+      {/* Back Button */}
+      <Button
+        variant="ghost"
+        onClick={() => navigate(-1)}
+        className="mb-4"
+      >
+        <ArrowLeft className="h-4 w-4 mr-2" />
+        Back
+      </Button>
+
       {/* Header */}
-      <div className="flex items-center gap-2 mb-2">
-        <Button
-          variant="outline"
-          size="icon"
-          className="rounded-full shadow-glow"
-          onClick={() => navigate(-1)}
-        >
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
-        </Button>
+      <div>
         <h1 className="text-3xl font-bold tracking-tight flex items-center">
           <SettingsIcon className="mr-3 h-8 w-8 text-primary" />
           Account Settings
         </h1>
+        <p className="text-muted-foreground mt-1">Manage your profile and preferences</p>
       </div>
-      <p className="text-muted-foreground mt-1">Manage your profile and preferences</p>
 
       {/* Profile Section */}
       <Card className="glass-card shadow-card">
@@ -90,6 +95,31 @@ export default function Settings() {
                 placeholder="Enter your username"
               />
             </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="dob">Date of Birth</Label>
+            <div className="relative">
+              <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="dob"
+                type="date"
+                value={user.dateOfBirth}
+                onChange={(e) => setUser({ ...user, dateOfBirth: e.target.value })}
+                className="pl-10"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="bio">Bio (optional)</Label>
+            <Textarea
+              id="bio"
+              value={user.bio}
+              onChange={(e) => setUser({ ...user, bio: e.target.value })}
+              placeholder="Tell us about yourself..."
+              rows={3}
+            />
           </div>
 
           <Button onClick={handleSave} className="gradient-sunset text-white shadow-glow">

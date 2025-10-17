@@ -2,17 +2,39 @@ import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Users, Crown, Shield, Star } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Users, Crown, Shield, Star, UserMinus, UserPlus, ArrowUp, ArrowDown } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export default function Members() {
-  const members = [
+  const [members, setMembers] = useState([
     { id: 1, name: "Alex Chen", role: "leader", xp: 5420, avatar: "AC", level: 18 },
     { id: 2, name: "Sarah Kim", role: "co-leader", xp: 4890, avatar: "SK", level: 16 },
     { id: 3, name: "Jordan Lee", role: "member", xp: 3240, avatar: "JL", level: 12 },
     { id: 4, name: "Morgan Davis", role: "member", xp: 2980, avatar: "MD", level: 11 },
     { id: 5, name: "Taylor Swift", role: "member", xp: 2650, avatar: "TS", level: 10 },
     { id: 6, name: "Casey Brown", role: "member", xp: 2100, avatar: "CB", level: 9 },
-  ];
+  ]);
+
+  const currentUserRole = "leader"; // This would come from auth context
+
+  const handleRemoveMember = (memberId: number, memberName: string) => {
+    setMembers(members.filter(m => m.id !== memberId));
+    toast.success(`${memberName} has been removed from the club`);
+  };
+
+  const handlePromoteToCoLeader = (memberId: number, memberName: string) => {
+    setMembers(members.map(m => m.id === memberId ? { ...m, role: "co-leader" } : m));
+    toast.success(`${memberName} has been promoted to Co-Leader! 🎉`);
+  };
+
+  const handleDemoteCoLeader = (memberId: number, memberName: string) => {
+    setMembers(members.map(m => m.id === memberId ? { ...m, role: "member" } : m));
+    toast.success(`${memberName} has been demoted to Member`);
+  };
+
+  const canManageMembers = currentUserRole === "leader" || currentUserRole === "co-leader";
 
   const getRoleIcon = (role: string) => {
     switch (role) {
@@ -57,8 +79,8 @@ export default function Members() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className="glass-card hover:shadow-glow transition-all cursor-pointer">
-                  <CardContent className="pt-6">
+                <Card className="glass-card hover:shadow-glow transition-all">
+                  <CardContent className="pt-6 space-y-4">
                     <div className="flex items-start space-x-4">
                       <Avatar className="h-14 w-14 border-2 border-primary">
                         <AvatarFallback className="text-lg font-bold gradient-sunset text-white">
@@ -77,6 +99,43 @@ export default function Members() {
                         </div>
                       </div>
                     </div>
+
+                    {/* Action Buttons (Only for leaders/co-leaders) */}
+                    {canManageMembers && member.role !== "leader" && (
+                      <div className="flex gap-2">
+                        {member.role === "member" && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="flex-1 hover:bg-primary hover:text-white transition-all"
+                            onClick={() => handlePromoteToCoLeader(member.id, member.name)}
+                          >
+                            <ArrowUp className="h-3 w-3 mr-1" />
+                            Promote
+                          </Button>
+                        )}
+                        {member.role === "co-leader" && currentUserRole === "leader" && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="flex-1 hover:bg-secondary transition-all"
+                            onClick={() => handleDemoteCoLeader(member.id, member.name)}
+                          >
+                            <ArrowDown className="h-3 w-3 mr-1" />
+                            Demote
+                          </Button>
+                        )}
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          className="flex-1"
+                          onClick={() => handleRemoveMember(member.id, member.name)}
+                        >
+                          <UserMinus className="h-3 w-3 mr-1" />
+                          Remove
+                        </Button>
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               </motion.div>

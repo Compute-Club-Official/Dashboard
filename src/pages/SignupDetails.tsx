@@ -1,42 +1,113 @@
-import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Camera, Rocket } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function SignupDetails() {
   const navigate = useNavigate();
-  const [form, setForm] = useState({
+  const [formData, setFormData] = useState({
     clubCode: "",
     name: "",
     username: "",
     dob: "",
-    avatar: "https://cdn.discordapp.com/embed/avatars/0.png", // placeholder
   });
-  const handleChange = (e: any) => setForm({ ...form, [e.target.name]: e.target.value });
-  const handleSubmit = (e: any) => {
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate save
-    setTimeout(() => navigate("/dashboard"), 1000);
+    console.log("Signup details:", formData);
+    // Save to database then redirect
+    navigate("/dashboard");
   };
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-red-500 to-orange-400">
-      <form onSubmit={handleSubmit} className="bg-white/90 rounded-xl shadow-xl p-8 w-full max-w-md space-y-4">
-        <h1 className="text-2xl font-bold mb-2">Complete Signup</h1>
-        <div className="flex flex-col items-center mb-4">
-          <img src={form.avatar} alt="Discord Avatar" className="w-20 h-20 rounded-full border-4 border-orange-400 shadow-glow mb-2" />
-          <span className="text-sm text-muted-foreground">Discord Avatar (change coming soon)</span>
-        </div>
-        <Label htmlFor="clubCode">Club Code (optional)</Label>
-        <Input id="clubCode" name="clubCode" value={form.clubCode} onChange={handleChange} placeholder="Enter club code" />
-        <Label htmlFor="name">Name</Label>
-        <Input id="name" name="name" value={form.name} onChange={handleChange} required placeholder="Your name" />
-        <Label htmlFor="username">Username</Label>
-        <Input id="username" name="username" value={form.username} onChange={handleChange} required placeholder="Choose a username" />
-        <Label htmlFor="dob">Date of Birth</Label>
-        <Input id="dob" name="dob" type="date" value={form.dob} onChange={handleChange} required />
-        <Button type="submit" className="w-full gradient-sunset text-white shadow-glow mt-4">Complete Signup</Button>
-      </form>
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+      <div className="absolute inset-0 gradient-sunset opacity-10" />
+      
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-lg relative"
+      >
+        <Card className="glass-card shadow-glow border-2 border-primary/20">
+          <CardHeader className="text-center">
+            <div className="flex justify-center mb-4">
+              <Rocket className="h-12 w-12 text-primary animate-pulse" />
+            </div>
+            <CardTitle className="text-2xl font-black">Complete Your Profile</CardTitle>
+            <p className="text-muted-foreground">Just a few more details to get started</p>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-5">
+              {/* Profile Picture */}
+              <div className="flex flex-col items-center space-y-3">
+                <Avatar className="h-24 w-24 border-4 border-primary/20">
+                  <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=Discord" />
+                  <AvatarFallback>DC</AvatarFallback>
+                </Avatar>
+                <Button type="button" variant="outline" size="sm" className="font-semibold">
+                  <Camera className="mr-2 h-4 w-4" />
+                  Change Avatar
+                </Button>
+                <p className="text-xs text-muted-foreground">Using Discord profile picture</p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="clubCode">Club Code (Optional)</Label>
+                <Input 
+                  id="clubCode" 
+                  placeholder="Enter club code if you have one"
+                  value={formData.clubCode}
+                  onChange={(e) => setFormData({...formData, clubCode: e.target.value})}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="name">Full Name</Label>
+                <Input 
+                  id="name" 
+                  placeholder="Alex Chen" 
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({...formData, name: e.target.value})}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="username">Username</Label>
+                <Input 
+                  id="username" 
+                  placeholder="alexchen" 
+                  required
+                  value={formData.username}
+                  onChange={(e) => setFormData({...formData, username: e.target.value})}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="dob">Date of Birth</Label>
+                <Input 
+                  id="dob" 
+                  type="date" 
+                  required
+                  value={formData.dob}
+                  onChange={(e) => setFormData({...formData, dob: e.target.value})}
+                />
+              </div>
+
+              <Button className="w-full gradient-sunset text-white shadow-glow font-bold py-6" type="submit">
+                <Rocket className="mr-2 h-5 w-5" />
+                Complete Signup
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </motion.div>
     </div>
   );
 }
