@@ -29,6 +29,17 @@ import Philosophy from "./pages/Philosophy";
 import ClubSettings from "./pages/ClubSettings";
 import DashboardLayout from "./components/DashboardLayout";
 import NotFound from "./pages/NotFound";
+import AdminLogin from "./pages/admin/AdminLogin";
+import AdminLayout from "./components/admin/AdminLayout";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminClubs from "./pages/admin/AdminClubs";
+import AdminXPShop from "./pages/admin/AdminXPShop";
+import AdminQuests from "./pages/admin/AdminQuests";
+import AdminProjects from "./pages/admin/AdminProjects";
+import AdminGallery from "./pages/admin/AdminGallery";
+import AdminMembers from "./pages/admin/AdminMembers";
+import AdminAnnouncements from "./pages/admin/AdminAnnouncements";
+import AdminSettings from "./pages/admin/AdminSettings";
 
 const queryClient = new QueryClient();
 
@@ -64,6 +75,18 @@ const App = () => (
             <Route path="/advertising" element={<Advertising />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/club-settings" element={<ClubSettings />} />
+          </Route>
+          <Route path="/admin" element={<AdminLogin />} />
+          <Route element={<AdminLayout />}>
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/clubs" element={<AdminClubs />} />
+            <Route path="/admin/xp-shop" element={<AdminXPShop />} />
+            <Route path="/admin/quests" element={<AdminQuests />} />
+            <Route path="/admin/projects" element={<AdminProjects />} />
+            <Route path="/admin/gallery" element={<AdminGallery />} />
+            <Route path="/admin/members" element={<AdminMembers />} />
+            <Route path="/admin/announcements" element={<AdminAnnouncements />} />
+            <Route path="/admin/settings" element={<AdminSettings />} />
           </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
